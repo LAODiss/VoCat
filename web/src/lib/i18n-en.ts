@@ -5,6 +5,12 @@
  * 富文本片段（嵌套链接/代码块的说明框）不走字典，在组件里按语言分支渲染。
  */
 export const EN_DICT: Record<string, string> = {
+  "VoWiFi MTU 兼容模式": "VoWiFi MTU compatibility mode",
+  "改善部分系统因网络包大小限制导致的注册失败": "Help resolve registration failures caused by packet size limits on some systems",
+  "默认关闭。遇到 MTU 不足导致的 VoWiFi 连接问题时可尝试开启。此设置适用于所有设备，保存后请重连 VoWiFi。": "Off by default. Try enabling this if MTU limits cause VoWiFi connection problems. Applies to all devices; reconnect VoWiFi after saving.",
+  "VoWiFi 兼容设置加载失败": "Failed to load VoWiFi compatibility settings",
+  "VoWiFi 兼容设置保存失败": "Failed to save VoWiFi compatibility settings",
+  "设置已保存，请重连 VoWiFi 后生效": "Settings saved. Reconnect VoWiFi to apply.",
 	"未知设备": "Unknown device",
 	"系统已发现 USB 读卡器，但 PC/SC 服务未运行；请安装并启动 pcscd 后重新扫描。": "The USB card reader was found, but the PC/SC service is not running. Install and start pcscd, then scan again.",
 	"系统已发现 USB 读卡器，但 PC/SC 驱动未加载；请安装 libccid 或厂商驱动后重新扫描。": "The USB card reader was found, but its PC/SC driver is not loaded. Install libccid or the vendor driver, then scan again.",
@@ -761,6 +767,17 @@ export const EN_DICT: Record<string, string> = {
   "加载设备信息失败": "Failed to load device info",
   "升序": "Ascending",
   "卡策略": "Card Policy",
+  "MBN 配置": "MBN Profile",
+  "自动（按卡的 HPLMN 选择）": "Automatic (follow the card HPLMN)",
+  "强制中国联通 OpenMkt": "Force China Unicom OpenMkt",
+  "强制中国移动 VoLTE": "Force China Mobile VoLTE",
+  "强制中国电信 OpenMkt": "Force China Telecom OpenMkt",
+  "EC20-CE 没有 ROW_Generic_3GPP。海外卡请按卡指定运营商 MBN；正在使用的卡更改后模组可能会重启。":
+    "EC20-CE has no ROW_Generic_3GPP. Set an operator MBN per overseas card. Changing this on the active card may reboot the module.",
+  "已保存强制 MBN；若此卡正在使用，模组可能会重启":
+    "Forced MBN saved. If this card is active, the module may reboot.",
+  "已恢复自动选择 MBN": "Automatic MBN selection restored",
+  "保存 MBN 失败": "Failed to save MBN profile",
   "即可继续": "to continue",
   "原运营商": "Original Carrier",
   "发送": "Send",

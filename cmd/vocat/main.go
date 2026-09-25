@@ -39,6 +39,7 @@ import (
 	"vocat/internal/vowifi/ims"
 	"vocat/internal/vowifi/integration"
 	vowifiruntime "vocat/internal/vowifi/runtime"
+	"vocat/internal/vowifisettings"
 	"vocat/web"
 )
 
@@ -489,7 +490,20 @@ func run(logger *slog.Logger, logs *loghub.Hub) error {
 
 	cardReaders := pcsc.New()
 	deviceLogger := logger.With("category", "hardware")
-	deviceManager, err := device.NewManager(device.Options{CardReaders: cardReaders, Logger: deviceLogger})
+	deviceManager, err := device.NewManager(device.Options{
+		CardReaders: cardReaders,
+		Logger:      deviceLogger,
+		MBNProfileForICCID: func(ctx context.Context, iccid string) (string, error) {
+			policy, err := database.CardPolicy(ctx, iccid)
+			if errors.Is(err, store.ErrNotFound) {
+				return "", nil
+			}
+			if err != nil {
+				return "", err
+			}
+			return policy.MBNProfile, nil
+		},
+	})
 	if err != nil {
 		return fmt.Errorf("create device manager: %w", err)
 	}
@@ -1149,6 +1163,9 @@ func newVoWiFiOrchestrator(
 		return nil, fmt.Errorf("device %q IKE provider: %w", deviceConfig.ID, err)
 	}
 	imsProvider, err := ims.NewProvider(adapter, ims.Config{
+		MTUCompatibility: func(ctx context.Context) bool {
+			return vowifisettings.MTUCompatibility(ctx, database)
+		},
 		Logger: vowifiLogger,
 		// Carrier-specific transport and SMSC defaults live in the shared data
 		// profile. Prefer network-provided P-CSCF hints, then safely try the
